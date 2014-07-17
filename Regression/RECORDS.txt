@@ -1,0 +1,75 @@
+Observations:
+
+No bloodflow in central necrosis.
+High bloodflow in the surrounding area.
+Also need to make sure to DFS for brain area simply because my Convex Hull and Dilation are sometimes outside the brain area.
+
+######################################################################
+
+
+What is the difference between these two cases?
+
+TCGA-06-0164
+TCGA-06-0162
+
+######################################################################
+
+RANDOM FOREST DECISION TREES ARE AMAZING.
+
+Age is a very strong predictor. Karnofsky score not too bad either.
+
+Current features used: Riesz features, first order statistics in tumor, demographics, contrast.
+
+Added dilation and convex hull features but not too useful.
+
+Combining features helps but I feel as if it is hacking.
+
+######################################################################
+
+TODO: Sebastian’s texture features, edge texture, and location, GCLM.
+
+
+
+Region Props and Eccentricity
+GCLM features
+
+Survival model only predicts relative survival. It does NOT say that a patient will survive X months. It only says that patients will die in the following order.
+
+Current accuracy: 75%
+
+Regression states how long until the patient actually dies. Obviously much tougher than survival model.
+
+Current standard error: 8 months.
+
+
+
+######################################################################
+
+
+OOB error rate is indeed lower than actual Cross Validation error. I implemented a binary classifier where you were blocked into groups of high or low survival with the cutoff being at 17 months. OOB error is 15% but CV error is 20%. Still not bad.
+
+
+
+It seems that Random Forest tends to overfit by a LOT. SVM is probably a better idea. Age is not nearly as good on SVM (about 30%). I think I can hit 10% error eventually. Screwed up and forgot to normalize.
+
+
+
+
+
+15% on SVM seems to be the best so far.
+Cutting useless features seems to be the logical next step.
+
+
+Through testing:
+
+C = 1.28
+SIGMA = 0.066 
+TRAIN = 0.02865385
+TEST = 0.1476923
+CV = 0.1130769
+
+
+Using average C and SIGMA values, I get a test accuracy of 13.4%. Not too shabby.
+
+
+10 Fold CV gives me 11.4% error on 100 random orderings 10Folded

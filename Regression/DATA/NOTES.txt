@@ -1,0 +1,60 @@
+Information in the DATA folder seems to have decent correlation with survival
+
+
+regression.mat contains a bunch of variables that are somewhat useful for doing regression.
+
+
+######################################################################
+
+DATA DESCRIPTION
+
+
+Age is in years
+Code is the Patient ID used to identify him or her
+Death is the number of days until death (0 is unknown 10000 if still alive when data was collected)
+Gender is 0 for female 1 for male
+Race is 0 White 1 Black 2 Asian
+Karn is Karnofsky score (ranges from 0 to 100 and is an indication of the outward physical well being of the patient).
+
+
+
+ALLDATA MATRIX
+
+Each row is a patient identified in the ImageID matrix
+I replace each missing value by the average in the group.
+
+ALLDATA ROWS
+
+Death
+Age
+Karn
+Gender
+Mean in ROI
+STD in ROI
+Contrast in ROI
+Squared Diff between slices
+
+
+######################################################################
+
+EXPANDED DATA MATRIX
+
+This is my regression data. VERY IMPORTANT.
+
+
+Row 1: Death
+
+Row 2-4: Age,Karn,Gender (Demographics)
+
+Row 5:13: Riesz Features
+
+Row 14:21 Image first order statistics (mean, median) CALCULATED IN extractFeatures.m
+
+
+######################################################################
+
+All features are documented in the allFeatures.m MATLAB file.
+
+clinical.txt contains the important clinical features for all patients.
+
+
