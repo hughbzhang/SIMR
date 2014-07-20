@@ -1,4 +1,3 @@
-"contact" "death" "code" "avails" "karn" "gender"
 "1" 279 358 "TCGA-02-0001" FALSE 80 0
 "2" 144 144 "TCGA-02-0003" FALSE 100 1
 "3" 558 558 "TCGA-02-0006" FALSE 80 0

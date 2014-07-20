@@ -11,7 +11,7 @@ function getStanford()
         if(~exist(strcat('NordicIce_data/',name),'dir'))
             name
             delete(strcat('StanfordROI/CEL/',list(i).name));
-            delete(strcat('StanfordROI/NEC/',list(i).name));
+            delete(strcat('StanfordROI/NEC/',strrep(list(i).name,'CEL','NEC')));
             continue;
         end
        if(~isempty(m.get(name))) continue; end
