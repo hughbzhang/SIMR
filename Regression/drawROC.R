@@ -1,5 +1,5 @@
-combo <- function(swap){
-
+roc <- function(swap){
+  
   library(kernlab)
   
   ORIGIN <- read.table("~/Documents/workspace/SIMR/Regression/DATA/NORMSTANFORD.txt", quote="\"")
@@ -7,24 +7,32 @@ combo <- function(swap){
   names <- read.table("~/Documents/workspace/SIMR/Regression/DATA/StanfordNames.txt", quote="\"")
   clin <- read.table("~/Documents/workspace/SIMR/Regression/DATA/normDemo.txt", quote="\"")
   
-  total = 0
-  
-  CV = matrix(data = 0,11,11)
-  TRAIN = matrix(data = 0,11,11)
-  #CV = rep(0,11)
-  #TRAIN = rep(0,11)
-  # 7 8 23
+  FP = rep(0,101)
+  TP = rep(0,101)
+  right = rep(0,101)
+
+  neg = 0
+  pos = 0
   
   #######EVERYTHING###########
   if(swap==1){
     all = ORIGIN[,c(7,8,23,32)]
     all[,5:8] = clin[ORIGIN$id,c(6,7,8,10)]
+    
+    BESTC = 10^4
+    BESTS = 10^-3
+    
     print('EVERYTHING')
   }
   
   ###############ONLY IMAGING######
   else if(swap==2){
     all = ORIGIN[,c(7,8,23,32)]
+    
+    BESTS = 10^1
+    BESTC = 10^1
+    
+    
     print('IMAGING')
   }
   
@@ -34,6 +42,10 @@ combo <- function(swap){
     all = data.frame(id = ORIGIN[,32])
     all[,2:5] = clin[ORIGIN$id,c(6,7,8,10)]
     print('CLINICAL')
+    
+    BESTS = 10^-1
+    BESTC = 10^1
+    
   }
   else{
     print("ERROR")
@@ -42,11 +54,9 @@ combo <- function(swap){
   
   
   
-  
   for (i in 1:100){
-    if(i%%10==0){ print(i);}
+    if(i%%10==0){print(i);}
     cur = sample(30)
-    
     
     test = all[all$id %in% cur[1:3],]
     train = all[!(all$id %in% cur[1:3]),]
@@ -56,29 +66,34 @@ combo <- function(swap){
     trainx  = as.matrix(train[,!(names(train) %in% 'id')]) 
     trainy = as.integer(surv[train$id,1])
     
-    total = total + nrow(trainx)
+    model = ksvm(trainx,trainy,type = "C-svc",kernel = 'rbf',kpar = list(sigma=BESTS),C=BESTC)
+    out = as.vector(predict(model,testx,'dec')) 
+    cases = unique(test$id)
+    ans = surv[cases,1]
+    pos = pos + sum(ans==1)
+    neg = neg + sum(ans==0)
+
     if(T){
-      for(SIGMA in seq(-5,5,by = 1)){
-        for(OURC in seq(-5,5,by = 1)){
-          arr = rep(0,3)
-          model = ksvm(trainx,trainy,type = "C-svc",kernel = 'rbf',kpar = list(sigma=10^SIGMA),C=10^OURC)
-          out = as.numeric(predict(model,testx))
-          out[out==0] = -1
-          cases = unique(test$id)
-          for(i in 1:length(out)){
-            arr[which(test[i,'id']==cases)] = arr[which(test[i,'id']==cases)]+out[i]
-          }
-          
-          CV[SIGMA+6,OURC+6] = CV[SIGMA+6,OURC+6] + sum((arr>=0)==surv[cases,])
-          TRAIN[SIGMA+6,OURC+6] = TRAIN[SIGMA+6,OURC+6] + sum(predict(model,trainx)==as.integer(surv[train$id,1]))
-          
+      for(cut in seq(-5,5,by = .1)){
+        arr = rep(0,3)
+        dec = as.numeric(out>cut)
+	dec[dec==0] = -1
+        for(i in 1:length(dec)){
+          arr[which(test[i,'id']==cases)] = arr[which(test[i,'id']==cases)]+dec[i]
         }
+	
+	arr[arr==0] = sample(c(-1,1),1)
+        TP[10*cut+51] = TP[10*cut+51] + sum((arr>0)&(ans==1))
+        FP[10*cut+51] = FP[10*cut+51] + sum((arr>0)&(ans==0))
+	right[10*cut+51] = right[10*cut+51] + sum((arr>0)==ans)
       }
     }
-   
-    
   }
-  
-  print(TRAIN)
-  return(CV)
+  FP = FP/neg
+  TP = TP/pos
+  if(swap==1){ lines(FP,TP,type = 's',col = 'red');}
+  if(swap==2){ lines(FP,TP,type = 's',col = 'blue');}
+  if(swap==3){ lines(FP,TP,type = 's',col = 'green');}
+  return(rbind(FP,TP))
+    
 }
