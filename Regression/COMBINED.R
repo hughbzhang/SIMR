@@ -80,5 +80,5 @@ combo <- function(swap){
   }
   
   print(TRAIN)
-  return(CV)
+  print(CV)
 }

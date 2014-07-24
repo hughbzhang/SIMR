@@ -13,6 +13,8 @@ roc <- function(swap){
 
   neg = 0
   pos = 0
+  ACC = 0
+  total = 0
   
   #######EVERYTHING###########
   if(swap==1){
@@ -67,12 +69,14 @@ roc <- function(swap){
     trainy = as.integer(surv[train$id,1])
     
     model = ksvm(trainx,trainy,type = "C-svc",kernel = 'rbf',kpar = list(sigma=BESTS),C=BESTC)
+    ACC = ACC + sum(predict(model,trainx)==trainy)
     out = as.vector(predict(model,testx,'dec')) 
     cases = unique(test$id)
     ans = surv[cases,1]
     pos = pos + sum(ans==1)
     neg = neg + sum(ans==0)
-
+    total = total + length(trainy)
+    
     if(T){
       for(cut in seq(-5,5,by = .1)){
         arr = rep(0,3)
@@ -89,6 +93,8 @@ roc <- function(swap){
       }
     }
   }
+  print(right[51]/300)
+  print(ACC/total)
   FP = FP/neg
   TP = TP/pos
   if(swap==1){ lines(FP,TP,type = 's',col = 'red');}
