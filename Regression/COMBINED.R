@@ -35,6 +35,11 @@ combo <- function(swap){
     all[,2:5] = clin[ORIGIN$id,c(6,7,8,10)]
     print('CLINICAL')
   }
+  else if(swap==4){
+    all = data.frame(id = ORIGIN[,32])
+    all[,2:7] = ORIGIN[,1:6]
+    print('Rajan')
+  }
   else{
     print("ERROR")
     return()
