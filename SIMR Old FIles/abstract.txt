@@ -1,0 +1,9 @@
+Glioblastoma is one of the deadliest primary brain cancers in adults, responsible for 17% of all brain cancers and having a two year survival rate of only 30%. Despite multimodal therapy, overall survival remains poor.
+
+Our project seeks to build a computational model to predict patient survival. Using the Cancer Genome Atlas dataset, we obtained dynamic susceptibility contrast (DSC) T2* perfusion MR images of each patient’s brains. Since tumors rely heavily on blood supply to grow, we hypothesized that our perfusion images, which measure bloodflow in the brain, would be indicative of patient survival. Patients who survived longer than the median cutoff line of 15 months were placed into the high survival group, while those who did not were placed into the low survival group. Sample imaging features extracted from the perfusion images include texture and contrast in and around the tumor area. In addition, we also looked at clinical features including age and gender.
+
+We created three models to predict patient survival. The first used only imaging features, while the second used only clinical features. The third model used a combination of both features.
+
+Our results indicate that imaging features individually correctly stratified around 70% of patients into groups of low or high survival. Models using only clinical features fared similarly, earning an accuracy of around 75%. Models combining the two features were able to correctly stratify around 85% of patients.
+
+Thus, we conclude that perfusion imaging features are useful in predicting glioblastoma patient survival and that combining both clinical and perfusion imaging features have promising performance in predicting patient survival.

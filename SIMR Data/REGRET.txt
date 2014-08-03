@@ -1,0 +1,23 @@
+Rajan everything about  68
+Rajan imaging alone 60% 
+Rajan clinical alone 58%
+Rajan no morphs + clinical 63%
+Rajan no morphs alone 58%
+
+455 Achal split
+15 months
+
+16 long
+14 short
+
+
+Seems that the best features of contrast and Riesz on CEL do pretty well solo.
+
+USING LEAVE ONE OUT
+
+
+(17-18)/30 using all imaging features (standard -3 to 3 2^X box)
+(20-21) using only 7,8,23
+
+Clinical features only about (16-17) (standard -5 to 5 2^X box)
+BUT WHEN ONLY USING 6 7 8 10, can get 87%

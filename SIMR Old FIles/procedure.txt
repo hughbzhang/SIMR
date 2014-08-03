@@ -1,0 +1,5 @@
+For each of the thirty patients in our group, we obtained demographic information such as age, gender, and karnofsky score. We also obtained basic information about the tumor, including both contrast enhancing lesion (CEL) and necrotic size. From our perfusion images, we obtained a mask of the tumor area drawn by a radiologist at Stanford. We extracted texture features, including Gray Level Co-Occurence matrix features, as well as Riesz energies. We also looked at the mean and max values inside the tumor region.
+
+Due to the relatively large number of features collected, we then performed feature selection. Each feature was trained by itself and tested on a test set that it had not seen before. The best features were then selected and used in our final model.
+
+We randomly shuffled the data into a 90/10 split between the test set and the training set. 27 patients were used to train our model, which was then tested on the remaining three patients. This procedure was repeated a large number of times, and the average number of patients classified correctly on the test set is the accuracy.

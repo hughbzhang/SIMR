@@ -1,0 +1,11 @@
+Glioblastoma is one of the deadliest primary brain cancers in adults, responsible for about 17% of all brain cancers and having a two year survival rate of only 30%. Despite multimodal therapy, overall survival remains poor. Known to be extremely malignant, it relies on a strong blood supply to provide nourishment for its growth. Thus, we hypothesiszed that imaging features in perfusion images would be predictive of patient survival. 
+
+We initially stratified patients into two groups: one with low survival and one with high survival. We used two standard image processing texture features: Riesz features and the Gray Level Co-occurence Matrix, as well as first order features such as mean, standard deviation in the tumor and surrounding area. We also sought to integrate clinical features into our model.
+
+Our project seeks to build a prediction model to stratify patients into low or high survival groups. The division line was the mean survival time of 16 months. Variables that were investigated include clinical features such as age and Karnofsky score, as well as imaging features, such as texture features and first order statistics extracted from the contrast enhancing lesions (CEL) of the tumor and surrounding area in dynamic susceptibility contrast (DSC) T2* perfusion MR images.
+
+We created three models to predict patient survival. One used only imaging features. The second used only clinical features. The third used a combination of both features.
+
+Our results showed that imaging features alone had a prediction accuracy was 58%, while clinical features had very similar performance. Imaging features combined with clinical features were able to correctly stratify patients into high or low survival 63% of the time, higher than what either set of features could have done alone.
+
+We conclude that the combined feature set of clinical features and imaging features extracted from perfusion images has better performance in predicting patient survival.
